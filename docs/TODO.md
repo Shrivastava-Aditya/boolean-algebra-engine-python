@@ -168,3 +168,40 @@ That is the finding. That is the paper.
 - [ ] Add operator reference to README
 - [ ] Document the Go ↔ Python boundary once decided
 - [ ] Keep `log.md` updated each session
+
+---
+
+## Roadmap
+
+### 1. Official Documentation Site
+
+~4k installs in 24 days and 35 versions shipped — the user base is real and the API has been moving fast. Docs are now a retention problem, not a nice-to-have.
+
+- [ ] Choose platform — Read the Docs (auto-builds from repo) or GitHub Pages with MkDocs Material
+- [ ] Quickstart guide — install, first expression, first truth table in under 5 minutes
+- [ ] API reference — auto-generated from docstrings (`mkdocstrings` or `sphinx-autodoc`)
+- [ ] Operator reference — precedence table, supported syntax, edge cases
+- [ ] Changelog / migration guide — v0.1 → v0.2 → v0.3 breaking changes documented
+- [ ] Hosted at a stable URL and linked from PyPI page and README
+
+### 2. Micro Audit Readiness & Compliance Checks (out of the box)
+
+Make the engine useful not just for correctness but for regulated environments where logic rules must be auditable and traceable.
+
+- [ ] Audit mode flag — `--audit` / `audit=True` that captures full evaluation trace (inputs, steps, result)
+- [ ] Compliance report output — structured JSON/YAML artifact per evaluation, suitable for attaching to audit logs
+- [ ] Rule traceability — tag expressions with IDs so outputs can be tied back to source rule definitions
+- [ ] Contradiction detection as a compliance gate — fail-fast if contradictions found, surface them explicitly
+- [ ] SARIF-compatible output option — standard format accepted by GitHub, Azure DevOps, and most SIEM tools
+- [ ] Document compliance posture — what the engine guarantees (determinism, no external calls, reproducibility)
+
+### 3. Usage Report Integration (user bookkeeping)
+
+Give users a way to understand how they used the engine and for what — useful for internal cost attribution, compliance records, and understanding which rule types appear most often in their pipelines.
+
+- [ ] Per-session usage log — opt-in, written locally to `~/.boolean-algebra-engine/usage.jsonl`
+- [ ] Log schema — timestamp, expression hash, variable count, result (sat/unsat/contradiction), duration, caller tag (optional)
+- [ ] `boolcalc report` CLI command — summarize usage log: calls by week, top expression types, contradiction rate trend
+- [ ] Export formats — CSV and JSON for import into existing bookkeeping / BI tools
+- [ ] Recommended integration guide — how to pipe the log into Datadog, Grafana, or a spreadsheet
+- [ ] Privacy-first defaults — no expressions logged by default (only metadata), opt-in to full expression logging
